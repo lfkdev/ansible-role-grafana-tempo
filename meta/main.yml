@@ -2,7 +2,8 @@
 # Meta file for grafana_tempo role
 
 galaxy_info:
-  author: Leon Klostermann
+  role_name: grafana_tempo
+  author: lfkdev
   description: Ansible role to install and configure Grafana Tempo
   company: lfk.codes
   license: MIT
@@ -17,5 +18,11 @@ galaxy_info:
         - bionic
         - focal
         - jammy
+  galaxy_tags:
+    - monitoring
+    - observability
+    - grafana
+    - tempo
+    - tracing
 
 dependencies: []
