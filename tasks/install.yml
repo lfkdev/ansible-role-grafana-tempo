@@ -1,0 +1,30 @@
+---
+# common tasks
+
+- name: Ensure Tempo user exist
+  user:
+    name: "{{ tempo_user }}"
+    system: yes
+    shell: /usr/sbin/nologin
+    create_home: no
+
+- name: Create Tempo directories # storage
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ tempo_user }}"
+    mode: '0755'
+    recurse: yes
+  loop:
+    - "{{ tempo_wal_path }}"
+    - "{{ tempo_local_path }}"
+
+- name: Deploy Tempo systemd service file
+  template:
+    src: tempo.service.j2
+    dest: /etc/systemd/system/tempo.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Tempo service
+

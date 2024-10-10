@@ -1,0 +1,30 @@
+---
+# Debian-specific setup tasks for grafana_tempo role
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Install dependencies on Debian
+  apt:
+    name:
+      - libcap2-bin
+    state: present
+
+- name: Download Tempo package for Debian
+  get_url:
+    url: "{{ tempo_download_url_deb }}"
+    dest: "/tmp/{{ tempo_package_deb }}"
+    checksum: "{{ tempo_package_checksum_deb }}"
+
+- name: Install Tempo package on Debian
+  apt:
+    deb: "/tmp/{{ tempo_package_deb }}"
+
+- name: Add network capabilities to Tempo binary on Debian
+  command: setcap 'cap_net_bind_service=+ep' /usr/bin/tempo
+  args:
+    warn: false
+  register: setcap_result
+  changed_when: setcap_result.rc != 0

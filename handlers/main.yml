@@ -1,0 +1,8 @@
+---
+# Handlers for grafana_tempo role
+
+- name: Restart Tempo service
+  service:
+    name: "{{ tempo_service_name }}"
+    state: restarted
+    daemon_reload: yes

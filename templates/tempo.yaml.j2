@@ -1,0 +1,48 @@
+# {{ansible_managed}}
+# Tempo configuration file
+
+server:
+  http_listen_port: {{ tempo_listening_port }}
+
+distributor:
+  receivers:
+    {{ tempo_receivers | to_nice_yaml(indent=2) | indent(4) }}
+
+compactor:
+  compaction:
+    block_retention: {{ tempo_block_retention }} 
+
+{% if tempo_enable_metrics_generator %}
+metrics_generator:
+  registry:
+    external_labels: 
+      {{ tempo_external_labels | to_nice_yaml(indent=2) | indent(6)}}
+  storage:
+    path: /var/tempo/generator/wal
+    remote_write: 
+      {{ tempo_remote_write | to_nice_yaml(indent=2) | indent(6)}}
+{% endif %}
+
+storage:
+  trace:
+    {% if tempo_storage_s3_access_key %}
+    backend: s3
+    s3:
+      endpoint: "{{ tempo_storage_s3_endpoint }}"
+      bucket: "{{ tempo_storage_s3_bucket }}"
+      forcepathstyle: true
+      enable_dual_stack: false
+      insecure: {{ tempo_storage_s3_insecure }}
+      access_key: "{{ tempo_storage_s3_access_key }}"
+      secret_key: "{{ tempo_storage_s3_secret_key }}"
+    {% else %}backend: local
+    {% endif -%}
+    wal:
+      path: "{{ tempo_wal_path }}"
+    local:
+      path: "{{ tempo_local_path }}"
+
+overrides:
+  defaults:
+    metrics_generator:
+      processors: [service-graphs, span-metrics]

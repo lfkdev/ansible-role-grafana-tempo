@@ -1,0 +1,10 @@
+---
+# config tasks
+
+- name: Template Tempo configuration
+  template:
+    src: tempo.yaml.j2
+    dest: "{{ tempo_install_dir }}/{{ tempo_config_file }}"
+    owner: "{{ tempo_user }}"
+    mode: '0644'
+  notify: Restart Tempo service

@@ -1,0 +1,15 @@
+[Unit]
+Description=Grafana Tempo Service
+After=network.target
+
+[Service]
+Type=simple
+User={{ tempo_user }}
+ExecStart=/usr/bin/tempo --config.file={{ tempo_install_dir }}/{{ tempo_config_file }}
+Restart=on-failure
+TimeoutSec = 120
+Restart = on-failure
+RestartSec = 2
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,56 @@
+---
+# Default variables for grafana_tempo role
+
+tempo_version: "2.6.0" # update checksums if you change the version (no, don't remove the checksum check)
+tempo_os_arch: "linux_amd64"
+tempo_listening_port: 3200
+
+# package names
+tempo_package_deb: "tempo_{{ tempo_version }}_{{ tempo_os_arch }}.deb"
+tempo_package_rpm: "tempo-{{ tempo_version }}-1.x86_64.rpm"
+
+# urls
+tempo_download_url_deb: "https://github.com/grafana/tempo/releases/download/v{{ tempo_version }}/{{ tempo_package_deb }}"
+tempo_download_url_rpm: "https://github.com/grafana/tempo/releases/download/v{{ tempo_version }}/{{ tempo_package_rpm }}"
+
+tempo_install_dir: "/etc/tempo"
+tempo_config_file: "config.yml"
+
+# system
+tempo_user: "tempo"
+tempo_service_name: "tempo"
+
+# storage
+tempo_storage_s3_endpoint: "s3.us-east-1.amazonaws.com"
+tempo_storage_s3_bucket: "grafana-traces-data"
+tempo_storage_s3_access_key: "" # if not defined, local storage will be used
+tempo_storage_s3_secret_key: ""
+tempo_storage_s3_insecure: true  # Set to false if endpoint is HTTPS
+
+tempo_wal_path: /var/tempo/wal
+tempo_local_path: /var/tempo/blocks
+
+tempo_block_retention: 48h
+
+# metric generator
+tempo_enable_metrics_generator: true
+tempo_external_labels:
+  source: "tempo"
+  cluster: "linux-microservices"
+
+tempo_remote_write:
+  - url: "http://localhost:9090/api/v1/write"
+    send_exemplars: true
+
+tempo_remote_write_url: http://localhost:9090/api/v1/write
+
+# distributors
+tempo_receivers:
+  otlp: 
+    protocols: 
+      grpc:
+      http:
+
+# checksums
+tempo_package_checksum_deb: "sha256:9be14f4ef2247763559786b874a9ef95ae95c29dc26fc9b0be1bea3625d2e122"
+tempo_package_checksum_rpm: "sha256:e3e90c31553ee75826a2648191ff0097eb8318b94b1c834e916e39d19d6d155b" 
