@@ -110,7 +110,7 @@ Configure the receivers that Tempo will use to ingest tracing data.
 ```yaml
 - hosts: myorg_monitoring
   roles:
-    - role: grafana_tempo
+    - role: lfkdev.grafana_tempo
   tags:
     - tempo
 ```

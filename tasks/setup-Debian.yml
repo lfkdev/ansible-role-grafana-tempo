@@ -22,9 +22,11 @@
   apt:
     deb: "/tmp/{{ tempo_package_deb }}"
 
-- name: Add network capabilities to Tempo binary on Debian
-  command: setcap 'cap_net_bind_service=+ep' /usr/bin/tempo
-  args:
-    warn: false
-  register: setcap_result
-  changed_when: setcap_result.rc != 0
+- name: "Enable tempo to ports lower than port 1024"
+  community.general.capabilities:
+    path: /usr/sbin/grafana-server
+    capability: CAP_NET_BIND_SERVICE+ep
+    state: present
+  when:
+    - "tempo_listening_port | int <= 1024"
+    - "tempo_cap_net_bind_service"
