@@ -1,6 +1,12 @@
 ---
 # Main tasks file for grafana_tempo role
 
+- name: Include common install tasks
+  include_tasks: install.yml
+
+- name: Include configuration tasks
+  include_tasks: config.yml
+
 - name: OS-specific setup for Debian family
   include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
@@ -8,12 +14,6 @@
 - name: OS-specific setup for RedHat family
   include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
-
-- name: Include common install tasks
-  include_tasks: install.yml
-
-- name: Include configuration tasks
-  include_tasks: config.yml
 
 - name: Include service management tasks
   include_tasks: service.yml
