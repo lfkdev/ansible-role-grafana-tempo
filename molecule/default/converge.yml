@@ -3,7 +3,7 @@
   hosts: all
 
   roles:
-    - role: ../../../lfkdev.tempo
+    - role: ../../../lfkdev.grafana_tempo
 
   post_tasks:
     - name: Check if tempo service is active
