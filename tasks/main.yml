@@ -12,5 +12,14 @@
   include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
+- name: Deploy Tempo systemd service file
+  template:
+    src: tempo.service.j2
+    dest: /etc/systemd/system/tempo.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Tempo service
+
 - name: Include configuration tasks
   include_tasks: config.yml
