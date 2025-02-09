@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+
+  roles:
+    - role: ../../../lfkdev.tempo
+
+  post_tasks:
+    - name: Check if tempo service is active
+      ansible.builtin.systemd:
+        name: tempo.service
+        state: started
+
+    - name: Check if tempo config file exists
+      ansible.builtin.stat:
+        path: "{{ tempo_install_dir }}/{{ tempo_config_file }}"
+      register: config_file
+
+    - name: Fail if tempo config file does not exist
+      ansible.builtin.fail:
+        msg: "tempo config file does not exist at {{ tempo_install_dir }}/{{ tempo_config_file }}"
+      when: not config_file.stat.exists

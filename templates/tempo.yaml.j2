@@ -10,22 +10,22 @@ distributor:
 
 compactor:
   compaction:
-    block_retention: {{ tempo_block_retention }} 
+    block_retention: {{ tempo_block_retention }}
 
 {% if tempo_enable_metrics_generator %}
 metrics_generator:
   registry:
-    external_labels: 
+    external_labels:
       {{ tempo_external_labels | to_nice_yaml(indent=2) | indent(6)}}
   storage:
     path: /var/tempo/generator/wal
-    remote_write: 
+    remote_write:
       {{ tempo_remote_write | to_nice_yaml(indent=2) | indent(6)}}
 {% endif %}
 
 storage:
   trace:
-    {% if tempo_storage_s3_access_key %}
+{% if tempo_storage_s3_access_key %}
     backend: s3
     s3:
       endpoint: "{{ tempo_storage_s3_endpoint }}"
@@ -35,8 +35,9 @@ storage:
       insecure: {{ tempo_storage_s3_insecure }}
       access_key: "{{ tempo_storage_s3_access_key }}"
       secret_key: "{{ tempo_storage_s3_secret_key }}"
-    {% else %}backend: local
-    {% endif -%}
+{% else %}
+    backend: local
+{% endif %}
     wal:
       path: "{{ tempo_wal_path }}"
     local:

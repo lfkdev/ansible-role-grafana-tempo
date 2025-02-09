@@ -17,6 +17,8 @@
     url: "{{ tempo_download_url_deb }}"
     dest: "/tmp/{{ tempo_package_deb }}"
     checksum: "{{ tempo_package_checksum_deb }}"
+    owner: "{{ tempo_user }}"
+    mode: '0644'
 
 - name: Install Tempo package on Debian
   apt:
