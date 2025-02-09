@@ -3,6 +3,7 @@
 
 tempo_version: "2.6.0" # update checksums if you change the version (no, don't remove the checksum check)
 tempo_os_arch: "linux_amd64"
+tempo_cap_net_bind_service: false
 tempo_listening_port: 3200
 
 # package names
