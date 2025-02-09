@@ -8,17 +8,6 @@
     shell: /usr/sbin/nologin
     create_home: no
 
-- name: Create Tempo directories # storage
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ tempo_user }}"
-    mode: '0755'
-    recurse: yes
-  loop:
-    - "{{ tempo_wal_path }}"
-    - "{{ tempo_local_path }}"
-
 - name: Deploy Tempo systemd service file
   template:
     src: tempo.service.j2

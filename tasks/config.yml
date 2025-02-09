@@ -1,6 +1,18 @@
 ---
 # config tasks
 
+- name: Create Tempo directories # storage
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ tempo_user }}"
+    mode: '0755'
+    recurse: yes
+  loop:
+    - "{{ tempo_wal_path }}"
+    - "{{ tempo_local_path }}"
+    - "{{ tempo_install_dir }}"
+
 - name: Template Tempo configuration
   template:
     src: tempo.yaml.j2
