@@ -1,9 +1,0 @@
----
-# Service tasks for grafana_tempo role
-
-- name: Ensure Tempo service is enabled and started
-  ansible.builtin.systemd:
-    name: "{{ tempo_service_name }}"
-    state: started
-    enabled: true
-    daemon_reload: true

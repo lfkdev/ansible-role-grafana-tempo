@@ -2,18 +2,18 @@
 # Debian-specific setup tasks for grafana_tempo role
 
 - name: Update APT cache
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: 86400
 
 - name: Install dependencies on Debian
-  apt:
+  ansible.builtin.apt:
     name:
       - libcap2-bin
     state: present
 
 - name: Download Tempo package for Debian
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ tempo_download_url_deb }}"
     dest: "/tmp/{{ tempo_package_deb }}"
     checksum: "{{ tempo_package_checksum_deb }}"
@@ -21,7 +21,7 @@
     mode: '0644'
 
 - name: Install Tempo package on Debian
-  apt:
+  ansible.builtin.apt:
     deb: "/tmp/{{ tempo_package_deb }}"
 
 - name: "Enable tempo to ports lower than port 1024"
