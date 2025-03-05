@@ -3,6 +3,7 @@
 
 server:
   http_listen_port: {{ tempo_listening_port }}
+  http_listen_address: {{ tempo_listening_address }}
 
 distributor:
   receivers:
@@ -25,7 +26,7 @@ metrics_generator:
 
 storage:
   trace:
-{% if tempo_storage_s3_access_key %}
+{% if tempo_storage_s3_bucket %}
     backend: s3
     s3:
       endpoint: "{{ tempo_storage_s3_endpoint }}"

@@ -5,6 +5,7 @@ tempo_version: "2.6.0" # update checksums if you change the version (no, don't r
 tempo_os_arch: "linux_amd64"
 tempo_cap_net_bind_service: false
 tempo_listening_port: 3200
+tempo_listening_address: 0.0.0.0
 
 # package names
 tempo_package_deb: "tempo_{{ tempo_version }}_{{ tempo_os_arch }}.deb"
@@ -23,8 +24,8 @@ tempo_service_name: "tempo"
 
 # storage
 tempo_storage_s3_endpoint: "s3.us-east-1.amazonaws.com"
-tempo_storage_s3_bucket: "grafana-traces-data"
-tempo_storage_s3_access_key: "" # if not defined, local storage will be used
+tempo_storage_s3_bucket: "" # if not defined, local storage will be used
+tempo_storage_s3_access_key: ""
 tempo_storage_s3_secret_key: ""
 tempo_storage_s3_insecure: true
 
