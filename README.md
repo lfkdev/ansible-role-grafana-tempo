@@ -52,13 +52,18 @@ tempo_service_name: "tempo"
 The name of the Tempo service.
 
 ```yaml
+tempo_listening_address: 0.0.0.0
+```
+Specifies the IP address on which the HTTP server will listen for incoming requests.
+
+```yaml
 tempo_listening_port: 3200
 ```
 The port on which Tempo will listen for incoming HTTP requests.
 
 ```yaml
 tempo_storage_s3_endpoint: "s3.us-east-1.amazonaws.com"
-tempo_storage_s3_bucket: "grafana-traces-data"
+tempo_storage_s3_bucket: ""
 tempo_storage_s3_access_key: ""
 tempo_storage_s3_secret_key: ""
 tempo_storage_s3_insecure: true
